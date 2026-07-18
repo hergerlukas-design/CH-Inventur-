@@ -35,9 +35,12 @@ Ware (Putztücher, abgefüllte Flaschen) wird als **Bulk/geschätzt** geführt.
 ### 1. Supabase-Projekt
 
 1. Auf [supabase.com](https://supabase.com) ein Projekt anlegen.
-2. Das Schema einspielen: Inhalt von
-   [`supabase/migrations/0001_initial_schema.sql`](supabase/migrations/0001_initial_schema.sql)
-   im **SQL Editor** ausführen (oder via Supabase CLI `supabase db push`).
+2. Das Schema einspielen: **beide** Migrationen aus `supabase/migrations/`
+   der Reihe nach im **SQL Editor** ausführen
+   ([`0001_initial_schema.sql`](supabase/migrations/0001_initial_schema.sql) =
+   Tabellen, RPCs, RLS, Realtime;
+   [`0002_function_grants.sql`](supabase/migrations/0002_function_grants.sql) =
+   Härtung der Funktions-Berechtigungen) – oder via Supabase CLI `supabase db push`.
 3. Unter **Authentication → Providers** E-Mail-Login aktivieren. Für den ersten
    schnellen Start ggf. „Confirm email“ deaktivieren.
 4. URL und Anon-Key aus **Project Settings → API** kopieren.

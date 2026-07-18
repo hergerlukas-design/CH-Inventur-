@@ -281,7 +281,9 @@ $$;
 -- =============================================================================
 -- View: Artikel mit Gesamtbestand + Mindestbestand-Warnung
 -- =============================================================================
-create view artikel_uebersicht as
+-- security_invoker: View wertet RLS des abfragenden Nutzers aus (nicht des Owners).
+create view artikel_uebersicht
+with (security_invoker = true) as
 select
   a.*,
   coalesce((select sum(b.menge) from bestand b where b.artikel_id = a.id and b.projekt_id is null), 0) as bestand_frei,
