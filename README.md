@@ -87,6 +87,27 @@ und Bestand **atomar** aktualisiert. Inventuren über `starte_inventur()` und
   projektgebundenen Bestand (`bestand.projekt_id` gesetzt = „im Einsatz“).
   Die Rückgabe kehrt das um.
 
+## Deployment auf Fly.io
+
+Die App wird als statische PWA über nginx ausgeliefert (`Dockerfile`, `nginx.conf`,
+`fly.toml` liegen im Repo). Auf dem eigenen Rechner mit installiertem
+[`flyctl`](https://fly.io/docs/flyctl/install/):
+
+```bash
+fly auth login
+fly launch --copy-config --no-deploy   # App anlegen; App-Namen ggf. anpassen
+fly deploy                             # baut per Remote-Builder und rollt aus
+```
+
+- **Supabase-Zugang:** URL und anon-Key stehen als Build-Args in `fly.toml` und
+  werden zur Build-Zeit ins Bundle gebacken (der anon-Key ist öffentlich und läuft
+  ohnehin im Browser). Bei einem anderen Supabase-Projekt dort anpassen.
+- **App-Name:** `app`-Feld in `fly.toml` ist global eindeutig – bei Bedarf ändern.
+- **Kosten:** `auto_stop_machines` fährt die Maschine bei Inaktivität herunter und
+  startet sie bei der ersten Anfrage automatisch wieder (spart Kosten, minimaler
+  Kaltstart). Für „immer an" `min_machines_running = 1` setzen.
+- **Region:** `fra` (Frankfurt) für niedrige Latenz Richtung Schweiz.
+
 ## Phase 2 (später)
 
 - Live-Status je Projekt (Grundlage über `bestand.projekt_id` bereits gelegt)
