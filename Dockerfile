@@ -4,7 +4,7 @@
 # =============================================================================
 
 # --- Build-Stufe -------------------------------------------------------------
-FROM node:22-alpine AS build
+FROM node:24-alpine AS build
 WORKDIR /app
 
 # Abhängigkeiten zuerst (bessere Layer-Caches)
